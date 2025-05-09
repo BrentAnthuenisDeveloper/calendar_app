@@ -6,6 +6,7 @@ import {
 	useState,
 } from "react";
 import { CalendarEvent } from "../Navigation/types";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 interface CalendarContextProps {
 	events: CalendarEvent[];
@@ -15,6 +16,9 @@ interface CalendarContextProps {
 	SetCalendarType: (type: string) => void;
 	selectedDate: Date;
 	setSelectedDate: (date: Date) => void;
+	findEvent: (id: string) => CalendarEvent | undefined;
+	currentDate: Date;
+	setCurrentDate: (date: Date) => void;
 }
 
 const CalendarContext = createContext<CalendarContextProps | null>(null);
@@ -25,28 +29,33 @@ export const CalendarProvider = ({ children }: PropsWithChildren) => {
 			id: "1",
 			title: "Event 1",
 			description: "Description for Event 1",
-			date: "2023-10-01",
+			time: "2025-05-07T10:00",
+			endTime: "2025-05-07T12:00",
 		},
 		{
 			id: "2",
 			title: "Event 2",
 			description: "Description for Event 2",
-			date: "2023-10-02",
+			time: "2023-10-02",
 		},
 		{
 			id: "3",
 			title: "Event 3",
 			description: "Description for Event 3",
-			date: "2023-10-03",
+			time: "2023-10-03",
 		},
 	]);
 	const [calendarType, SetCalendarType] = useState("day");
 	const [selectedDate, setSelectedDate] = useState(new Date());
+	const [currentDate, setCurrentDate] = useState(new Date());
 
 	const addEvent = (event: CalendarEvent) => {
 		setEvents((prevEvents) => [...prevEvents, event]);
 	};
-
+	const findEvent = (id: string) => {
+		const event = events.find((event) => event.id === id);
+		return event;
+	};
 	const removeEvent = (id: string) => {
 		setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
 	};
@@ -86,6 +95,9 @@ export const CalendarProvider = ({ children }: PropsWithChildren) => {
 				SetCalendarType,
 				selectedDate,
 				setSelectedDate,
+				findEvent,
+				currentDate,
+				setCurrentDate,
 			}}
 		>
 			{children}

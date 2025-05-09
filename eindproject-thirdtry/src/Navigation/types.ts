@@ -5,7 +5,8 @@ export interface CalendarEvent {
 	id: string;
 	title: string;
 	description: string;
-	date: string; // Stored as "YYYY-MM-DDTHH:MM"
+	time: string; // Stored as "YYYY-MM-DDTHH:MM"
+	endTime?: string;
 }
 
 export type TabNavigationParamList = {
@@ -15,7 +16,7 @@ export type TabNavigationParamList = {
 };
 export type StackNavigationParamList = {
 	Calendar: undefined;
-	TaskDetails: { CalendarEvent: CalendarEvent };
+	TaskDetails: { CalendarEventId: string };
 	AddEvent: undefined;
 };
 

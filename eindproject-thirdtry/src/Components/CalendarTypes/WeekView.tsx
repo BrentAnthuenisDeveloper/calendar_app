@@ -1,18 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { CalendarEvent } from '../../Navigation/types';
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { CalendarEvent } from "../../Navigation/types";
+import MyText from "../MyText";
 
-interface WeekViewProps{
-    calendar: CalendarEvent[];
+interface WeekViewProps {
+	calendar: CalendarEvent[];
 }
-const WeekView = ({calendar}:WeekViewProps) => {
-  return (
-    <View>
-      <Text>WeekView</Text>
-    </View>
-  )
-}
+const WeekView = ({ calendar }: WeekViewProps) => {
+	return (
+		<View>
+			<MyText>WeekView</MyText>
+		</View>
+	);
+};
 
-export default WeekView
+export default WeekView;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

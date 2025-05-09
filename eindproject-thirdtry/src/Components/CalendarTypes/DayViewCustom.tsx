@@ -7,10 +7,11 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
-import { CalendarEvent, StackNavProps } from "../../Navigation/types";
+import { StackNavProps } from "../../Navigation/types";
+import CalendarEvent from "../../Types/CalendarEvent";
 import MyText from "../MyText";
 
-interface DayViewProps {
+export interface DayViewProps {
 	calendar: CalendarEvent[];
 	removeEvent: (id: string) => void;
 	navigation: StackNavProps<"Calendar">["navigation"];

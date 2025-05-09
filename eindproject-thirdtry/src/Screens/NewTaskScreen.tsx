@@ -52,7 +52,7 @@ const NewTaskScreen = () => {
 			id: Date.now().toString(),
 			title,
 			description,
-			date: fullDateTime,
+			time: fullDateTime,
 		};
 		addEvent(newEvent);
 		console.log("Submitted Event:", newEvent);
