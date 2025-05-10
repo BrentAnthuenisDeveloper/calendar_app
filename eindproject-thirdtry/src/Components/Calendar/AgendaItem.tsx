@@ -3,17 +3,17 @@ import React from "react";
 import { CalendarEvent } from "../../Navigation/types";
 import MyText from "../MyText";
 
-interface WeekViewProps {
-	calendar: CalendarEvent[];
+interface AgendaItemProps {
+	event: CalendarEvent;
 }
-const WeekView = ({ calendar }: WeekViewProps) => {
+const AgendaItem = ({ event }: AgendaItemProps) => {
 	return (
 		<View>
-			<MyText>WeekView</MyText>
+			<MyText>{event.title}</MyText>
 		</View>
 	);
 };
 
-export default WeekView;
+export default AgendaItem;
 
 const styles = StyleSheet.create({});

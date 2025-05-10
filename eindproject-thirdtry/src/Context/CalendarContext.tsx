@@ -29,25 +29,27 @@ export const CalendarProvider = ({ children }: PropsWithChildren) => {
 			id: "1",
 			title: "Event 1",
 			description: "Description for Event 1",
-			time: "2025-05-07T10:00",
-			endTime: "2025-05-07T12:00",
+			time: new Date(2025, 4, 9, 12, 0, 0, 0),
+			endTime: new Date(2025, 4, 9, 14, 0, 0, 0),
 		},
 		{
 			id: "2",
 			title: "Event 2",
 			description: "Description for Event 2",
-			time: "2023-10-02",
+			time: new Date(2025, 4, 9, 13, 0, 0, 0),
+			endTime: new Date(2025, 4, 9, 14, 0, 0, 0),
 		},
 		{
 			id: "3",
 			title: "Event 3",
 			description: "Description for Event 3",
-			time: "2023-10-03",
+			time: new Date(2025, 4, 9, 15, 0, 0, 0),
+			endTime: new Date(2025, 4, 9, 20, 0, 0, 0),
 		},
 	]);
 	const [calendarType, SetCalendarType] = useState("day");
-	const [selectedDate, setSelectedDate] = useState(new Date());
-	const [currentDate, setCurrentDate] = useState(new Date());
+	const [selectedDate, setSelectedDate] = useState(new Date(Date.now()));
+	const [currentDate, setCurrentDate] = useState(new Date(Date.now()));
 
 	const addEvent = (event: CalendarEvent) => {
 		setEvents((prevEvents) => [...prevEvents, event]);

@@ -6,9 +6,10 @@ import { startScreenTransition } from "react-native-reanimated";
 import StartScreen from "../Screens/StartScreen";
 import CalendarScreen from "../Screens/CalendarScreen";
 import SettingsScreen from "../Screens/SettingsScreen";
-import StackNavigator from "./StackNavigator";
+import CalendarStackNavigator from "./CalendarStackNavigator";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import LoginStackNavigator from "./LoginStackNavigator";
 
 const tabnav = createBottomTabNavigator<TabNavigationParamList>();
 
@@ -21,11 +22,12 @@ const DrawerNavigator = () => {
 		>
 			<tabnav.Screen
 				name="Home"
-				component={StartScreen}
+				component={LoginStackNavigator}
 				options={{
 					tabBarIcon: ({ color, size }) => (
 						<MaterialCommunityIcons name="home" color={color} size={size} />
 					),
+					headerShown: false,
 				}}
 			/>
 			<tabnav.Screen
@@ -36,7 +38,7 @@ const DrawerNavigator = () => {
 					),
 				}}
 				name="CalendarStack"
-				component={StackNavigator}
+				component={CalendarStackNavigator}
 			/>
 			<tabnav.Screen
 				name="Settings"

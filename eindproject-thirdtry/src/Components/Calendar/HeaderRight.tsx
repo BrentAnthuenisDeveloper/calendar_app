@@ -1,14 +1,15 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
-import { useCalendarContext } from "../Context/CalendarContext";
+import { useCalendarContext } from "../../Context/CalendarContext";
 import { useNavigation } from "@react-navigation/native";
-import { StackNavProps } from "../Navigation/types";
+import { CalendarStackNavProps } from "../../Navigation/types";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const HeaderRight = () => {
 	const { calendarType, SetCalendarType } = useCalendarContext();
-	const navigation = useNavigation<StackNavProps<"Calendar">["navigation"]>();
+	const navigation =
+		useNavigation<CalendarStackNavProps<"Calendar">["navigation"]>();
 	//properties for dropdown
 	const [items, setItems] = useState([
 		{ label: "Day", value: "day" },

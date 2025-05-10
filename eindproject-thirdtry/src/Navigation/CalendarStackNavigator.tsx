@@ -1,21 +1,14 @@
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import StartScreen from "../Screens/StartScreen";
 import CalendarScreen from "../Screens/CalendarScreen";
-import SettingsScreen from "../Screens/SettingsScreen";
-import { StackNavigationParamList, StackNavProps } from "./types";
+import { CalandarStackNavigationParamList } from "./types";
 import TaskDetailsScreen from "../Screens/TaskDetailsScreen";
-import { useNavigation } from "@react-navigation/core";
 import NewTaskScreen from "../Screens/NewTaskScreen";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Dropdown } from "react-native-element-dropdown";
-import { useCalendarContext } from "../Context/CalendarContext";
-import HeaderRight from "../Components/HeaderRight";
+import HeaderRight from "../Components/Calendar/HeaderRight";
 ("react-native-element-dropdown");
 
-const stack = createStackNavigator<StackNavigationParamList>();
-const StackNavigator = () => {
+const stack = createStackNavigator<CalandarStackNavigationParamList>();
+const CalendarStackNavigator = () => {
 	return (
 		<stack.Navigator
 			screenOptions={{
@@ -35,4 +28,4 @@ const StackNavigator = () => {
 	);
 };
 
-export default StackNavigator;
+export default CalendarStackNavigator;
