@@ -1,12 +1,13 @@
-import { StyleSheet, Text, View } from "react-native";
-import { CalendarProvider, ExpandableCalendar } from "react-native-calendars";
-import React, { useState } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { CalendarProvider } from "react-native-calendars";
+import React, { useMemo, useState } from "react";
 import { CalendarEvent, CalendarStackNavProps } from "../../Navigation/types";
 import { useCalendarContext } from "../../Context/CalendarContext";
-import { format } from "date-fns";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList } from "react-native";
 import AgendaItem from "./AgendaItem";
 import MyText from "../MyText";
+import { ActivityIndicator } from "react-native-paper";
+import CalendarPicker from "react-native-calendar-picker";
 
 interface DayViewProps {
 	calendar: CalendarEvent[];
@@ -18,11 +19,16 @@ const AgendaWithFlatList = ({
 	removeEvent,
 	navigation,
 }: DayViewProps) => {
+	const [loading, setLoading] = useState(true);
 	const { currentDate, selectedDate, setSelectedDate } = useCalendarContext();
 
-	const currentDateString = currentDate.toISOString();
+	const currentDateString = useMemo(
+		() => currentDate.toISOString(),
+		[currentDate]
+	);
 
-	const SelectedDaysItems = () => {
+	const SelectedDaysItems = useMemo(() => {
+		setLoading(true);
 		console.log(
 			"unfilterdCalendardates",
 			calendar.map((event) => event.time.toString())
@@ -36,27 +42,46 @@ const AgendaWithFlatList = ({
 			);
 		});
 		console.log("filteredCalendar", filteredCalendar);
+		setLoading(false);
 		return filteredCalendar;
-	};
+	}, [calendar, selectedDate]);
 
 	return (
-		<CalendarProvider date={currentDateString} style={styles.container}>
-			<ExpandableCalendar
-				firstDay={1}
-				onDayPress={(dayData) => setSelectedDate(new Date(dayData.timestamp))}
-				theme={{
-					agendaDayTextColor: "#222",
-					agendaDayNumColor: "#222",
-					agendaTodayColor: "blue",
-					agendaKnobColor: "#ccc",
+		<CalendarProvider
+			date={currentDateString}
+			style={styles.container}
+			theme={{
+				textDayFontFamily: "ebgaramond",
+				textMonthFontFamily: "ebgaramond",
+				textDayHeaderFontFamily: "ebgaramond",
+			}}
+		>
+			<CalendarPicker
+				textStyle={{ fontFamily: "ebgaramond" }}
+				onDateChange={(dayData) => {
+					setSelectedDate(dayData);
 				}}
 			/>
-			{SelectedDaysItems().length > 0 ? (
+			{loading ? (
+				<View style={styles.spinnerContainer}>
+					<ActivityIndicator animating={true} size="large" />
+				</View>
+			) : SelectedDaysItems.length > 0 ? (
 				<FlatList
 					style={styles.flatList}
-					data={SelectedDaysItems()}
+					data={SelectedDaysItems}
 					renderItem={({ item }) => {
-						return <AgendaItem event={item} />;
+						return (
+							<TouchableOpacity
+								onPress={() =>
+									navigation.navigate("TaskDetails", {
+										CalendarEventId: item.id,
+									})
+								}
+							>
+								<AgendaItem removeEvent={removeEvent} event={item} />
+							</TouchableOpacity>
+						);
 					}}
 					contentContainerStyle={styles.listContent}
 				/>
@@ -93,5 +118,10 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		color: "#666",
 		textAlign: "center",
+	},
+	spinnerContainer: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
 	},
 });

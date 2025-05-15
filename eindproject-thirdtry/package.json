@@ -1,41 +1,44 @@
 {
-	"name": "eindproject-thirdtry",
-	"version": "1.0.0",
-	"main": "index.ts",
-	"scripts": {
-		"start": "expo start",
-		"android": "expo start --android",
-		"ios": "expo start --ios",
-		"web": "expo start --web"
-	},
-	"dependencies": {
-		"@react-navigation/bottom-tabs": "^7.3.10",
-		"@react-navigation/drawer": "^7.3.9",
-		"@react-navigation/native": "^7.1.6",
-		"@react-navigation/native-stack": "^7.3.10",
-		"@react-navigation/stack": "^7.2.10",
-		"date-fns": "^4.1.0",
-		"expo": "~52.0.42",
-		"expo-font": "~13.0.4",
-		"expo-splash-screen": "~0.29.22",
-		"expo-status-bar": "~2.0.1",
-		"formik": "^2.4.6",
-		"install": "^0.13.0",
-		"react": "18.3.1",
-		"react-native": "0.76.9",
-		"react-native-calendars": "^1.1312.0",
-		"react-native-dropdown-picker": "^5.4.6",
-		"react-native-gesture-handler": "~2.20.2",
-		"react-native-reanimated": "~3.16.1",
-		"react-native-safe-area-context": "4.12.0",
-		"react-native-screens": "~4.4.0",
-		"react-native-webview": "13.12.5",
-		"yup": "^1.6.1"
-	},
-	"devDependencies": {
-		"@babel/core": "^7.25.2",
-		"@types/react": "~18.3.12",
-		"typescript": "^5.3.3"
-	},
-	"private": true
+  "name": "eindproject-thirdtry",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@react-navigation/bottom-tabs": "^7.3.10",
+    "@react-navigation/drawer": "^7.3.9",
+    "@react-navigation/native": "^7.1.6",
+    "@react-navigation/native-stack": "^7.3.10",
+    "@react-navigation/stack": "^7.2.10",
+    "date-fns": "^4.1.0",
+    "expo": "^53.0.9",
+    "expo-font": "~13.3.1",
+    "expo-splash-screen": "~0.30.8",
+    "expo-status-bar": "~2.2.3",
+    "formik": "^2.4.6",
+    "install": "^0.13.0",
+    "react": "19.0.0",
+    "react-native": "0.79.2",
+    "react-native-calendar-picker": "^8.0.5",
+    "react-native-calendars": "^1.1312.0",
+    "react-native-dropdown-picker": "^5.4.6",
+    "react-native-gesture-handler": "~2.24.0",
+    "react-native-paper": "^5.14.1",
+    "react-native-reanimated": "~3.17.4",
+    "react-native-safe-area-context": "5.4.0",
+    "react-native-screens": "~4.10.0",
+    "react-native-webview": "13.13.5",
+    "yup": "^1.6.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@types/react": "~19.0.10",
+    "@types/react-native-calendar-picker": "^8.0.0",
+    "typescript": "^5.3.3"
+  },
+  "private": true
 }
