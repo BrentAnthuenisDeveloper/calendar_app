@@ -1,5 +1,4 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { CalendarProvider } from "react-native-calendars";
 import React, { useMemo, useState } from "react";
 import { CalendarEvent, CalendarStackNavProps } from "../../Navigation/types";
 import { useCalendarContext } from "../../Context/CalendarContext";
@@ -29,33 +28,22 @@ const AgendaWithFlatList = ({
 
 	const SelectedDaysItems = useMemo(() => {
 		setLoading(true);
-		console.log(
-			"unfilterdCalendardates",
-			calendar.map((event) => event.time.toString())
-		);
-		console.log("selectedDate", selectedDate.toString());
+
 		const filteredCalendar = calendar.filter((event) => {
+			const eventdate = new Date(event.time);
+
 			return (
-				event.time.getDate() === selectedDate.getDate() &&
-				event.time.getMonth() === selectedDate.getMonth() &&
-				event.time.getFullYear() === selectedDate.getFullYear()
+				eventdate.getDate() === selectedDate.getDate() &&
+				eventdate.getMonth() === selectedDate.getMonth() &&
+				eventdate.getFullYear() === selectedDate.getFullYear()
 			);
 		});
-		console.log("filteredCalendar", filteredCalendar);
 		setLoading(false);
 		return filteredCalendar;
 	}, [calendar, selectedDate]);
 
 	return (
-		<CalendarProvider
-			date={currentDateString}
-			style={styles.container}
-			theme={{
-				textDayFontFamily: "ebgaramond",
-				textMonthFontFamily: "ebgaramond",
-				textDayHeaderFontFamily: "ebgaramond",
-			}}
-		>
+		<View style={styles.container}>
 			<CalendarPicker
 				textStyle={{ fontFamily: "ebgaramond" }}
 				onDateChange={(dayData) => {
@@ -90,7 +78,7 @@ const AgendaWithFlatList = ({
 					<MyText style={styles.noEventsText}>No Events For This Date</MyText>
 				</View>
 			)}
-		</CalendarProvider>
+		</View>
 	);
 };
 

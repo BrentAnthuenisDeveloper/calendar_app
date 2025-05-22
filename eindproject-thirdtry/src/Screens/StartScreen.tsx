@@ -3,6 +3,7 @@ import React from "react";
 import MyText from "../Components/MyText";
 
 const StartScreen = () => {
+	console.log("StartScreen");
 	return (
 		<View style={styles.container}>
 			<MyText>Welcome to this calendar app</MyText>

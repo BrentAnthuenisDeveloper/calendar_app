@@ -2,7 +2,7 @@ interface CalendarEvent {
 	id: string;
 	title: string;
 	description: string;
-	time: string; // Stored as "YYYY-MM-DDTHH:MM"
-	endTime?: string;
+	time: Date;
+	endTime: Date;
 }
 export default CalendarEvent;

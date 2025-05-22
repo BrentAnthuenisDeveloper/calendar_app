@@ -1,19 +1,27 @@
 import { StyleSheet, View } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { CalendarStackNavProps } from "../Navigation/types";
 import { useNavigation } from "@react-navigation/native";
-import { useCalendarContext } from "../Context/CalendarContext";
 import AgendaWithFlatList from "../Components/Calendar/AgendaWithFlatList";
+import { useAppSelector } from "../hooks/redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getEvents, removeEvent } from "../Redux/events/eventSlice";
 
 const CalendarScreen = () => {
 	const navigation =
 		useNavigation<CalendarStackNavProps<"Calendar">["navigation"]>();
-	const { events, removeEvent } = useCalendarContext();
+	//const { events, removeEvent } = useCalendarContext();
+	const events = useAppSelector((state) => state.events);
+	
+	const dispatch = useDispatch();
+	const removeEventLocal = (id: string) => {
+		dispatch(removeEvent(id));
+	};
 	return (
 		<View style={styles.container}>
 			<AgendaWithFlatList
 				calendar={events}
-				removeEvent={removeEvent}
+				removeEvent={removeEventLocal}
 				navigation={navigation}
 			/>
 		</View>

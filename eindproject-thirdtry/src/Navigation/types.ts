@@ -10,7 +10,7 @@ export interface CalendarEvent {
 }
 
 export type TabNavigationParamList = {
-	Home: undefined;
+	HomeStack: undefined;
 	CalendarStack: undefined;
 	Settings: undefined;
 };

@@ -21,7 +21,7 @@ const DrawerNavigator = () => {
 			}}
 		>
 			<tabnav.Screen
-				name="Home"
+				name="HomeStack"
 				component={LoginStackNavigator}
 				options={{
 					tabBarIcon: ({ color, size }) => (
