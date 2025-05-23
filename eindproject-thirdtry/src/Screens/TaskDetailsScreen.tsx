@@ -1,27 +1,70 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useMemo } from "react";
 import { useRoute } from "@react-navigation/native";
 import { CalendarStackNavProps } from "../Navigation/types";
 import { useCalendarContext } from "../Context/CalendarContext";
+import MyPaperText from "../Components/MyPaperText";
+import MyText from "../Components/MyText";
+import { useAppSelector } from "../hooks/redux";
 
 const TaskDetails = () => {
 	const {
 		params: { CalendarEventId },
 	} = useRoute<CalendarStackNavProps<"TaskDetails">["route"]>();
-	const { findEvent } = useCalendarContext();
-	const CalendarEvent = findEvent(CalendarEventId);
+	// const { findEvent } = useCalendarContext();
+	// const CalendarEvent = findEvent(CalendarEventId);
+	const events = useAppSelector((state) => state.events);
+
+	const CalendarEvent = useMemo(
+		() => events.find((event) => event.id === CalendarEventId),
+		[events, CalendarEventId]
+	);
 	return CalendarEvent ? (
-		<View>
-			<Text>details for task: {CalendarEvent.title}</Text>
-			<Text>{CalendarEvent.description}</Text>
+		<View style={styles.container}>
+			<View style={styles.textContainer}>
+				<MyPaperText variant="headlineMedium" style={styles.title}>
+					{CalendarEvent.title}
+				</MyPaperText>
+				<MyPaperText variant="bodyMedium" style={styles.description}>
+					{CalendarEvent.description}
+				</MyPaperText>
+			</View>
 		</View>
 	) : (
-		<View>
-			<Text>Task not found</Text>
+		<View style={styles.container}>
+			<MyText style={styles.notFound}>Task not found</MyText>
 		</View>
 	);
 };
 
 export default TaskDetails;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		padding: 20,
+		backgroundColor: "#f9f9f9",
+		justifyContent: "center",
+	},
+	textContainer: {
+		backgroundColor: "#ffffff",
+		padding: 20,
+		borderRadius: 12,
+		elevation: 3,
+		shadowColor: "#000",
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.1,
+		shadowRadius: 4,
+	},
+	title: {
+		marginBottom: 10,
+	},
+	description: {
+		color: "#444",
+	},
+	notFound: {
+		textAlign: "center",
+		color: "#888",
+		fontSize: 16,
+	},
+});
