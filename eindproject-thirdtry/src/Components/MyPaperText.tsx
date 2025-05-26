@@ -7,7 +7,7 @@ const MyPaperText = (
 ) => {
 	return (
 		<View>
-			<Text {...props} style={[{ fontFamily: "ebgaramond" }, props.style]}>
+			<Text {...props} style={[props.style, { fontFamily: "ebgaramond" }]}>
 				{props.children}
 			</Text>
 		</View>

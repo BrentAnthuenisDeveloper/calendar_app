@@ -13,7 +13,7 @@ import LoginStackNavigator from "./LoginStackNavigator";
 
 const tabnav = createBottomTabNavigator<TabNavigationParamList>();
 
-const DrawerNavigator = () => {
+const GlobalTabNavigator = () => {
 	return (
 		<tabnav.Navigator
 			screenOptions={{
@@ -53,4 +53,4 @@ const DrawerNavigator = () => {
 	);
 };
 
-export default DrawerNavigator;
+export default GlobalTabNavigator;

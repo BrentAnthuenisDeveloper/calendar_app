@@ -9,6 +9,8 @@ import { addEvent } from "../Redux/events/eventSlice";
 import MyText from "../Components/MyText";
 import { useNavigation } from "@react-navigation/native";
 import { TextInput } from "react-native-paper";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../firebase/firebaseConfig";
 
 const validationSchema = Yup.object().shape({
 	title: Yup.string().required("Title is required"),
@@ -42,25 +44,27 @@ const CreateEventScreen = () => {
 			time: "",
 		},
 		onSubmit: async (values) => {
-			console.log("formvalues", values);
 			try {
 				const [day, month, year] = values.date.split("/");
-
 				const formattedDate = `${year}-${month}-${day}T${values.time || "00:00"}`;
-				console.log("formattedDate", formattedDate);
+				const time = new Date(formattedDate);
+
 				const newEvent = {
-					id: Date.now().toString(),
 					title: values.title,
 					description: values.description ?? "",
-					time: new Date(formattedDate),
-					endTime: new Date(formattedDate),
+					time: time.toISOString(),
 				};
-				console.log("newEvent", newEvent);
-				addEventLocal(newEvent);
-				SetAlert("Event created successfully");
+
+				// Save to Firestore
+				await addDoc(collection(db, "events"), newEvent);
+
+				console.log("Event saved to Firestore 🎉");
+				if (nav.canGoBack()) {
+					nav.goBack();
+				}
 			} catch (error) {
-				console.log(error);
-				SetAlert("Error creating event");
+				console.error("Error adding event: ", error);
+				SetAlert("Failed to save event");
 			}
 		},
 		validationSchema,

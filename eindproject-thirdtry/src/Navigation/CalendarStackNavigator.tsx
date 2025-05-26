@@ -1,14 +1,14 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import CalendarScreen from "../Screens/CalendarScreen";
-import { CalandarStackNavigationParamList } from "./types";
+import { CalendarStackNavigationParamList } from "./types";
 import TaskDetailsScreen from "../Screens/TaskDetailsScreen";
 import NewTaskScreen from "../Screens/NewTaskScreen";
-import HeaderRight from "../Components/Calendar/HeaderRight";
+import HeaderRightCalendar from "../Components/Calendar/HeaderRightCalendar";
 import CreateEventScreen from "../Screens/CreateEventScreen";
 ("react-native-element-dropdown");
 
-const stack = createStackNavigator<CalandarStackNavigationParamList>();
+const stack = createStackNavigator<CalendarStackNavigationParamList>();
 const CalendarStackNavigator = () => {
 	return (
 		<stack.Navigator
@@ -20,7 +20,7 @@ const CalendarStackNavigator = () => {
 				name="Calendar"
 				component={CalendarScreen}
 				options={() => ({
-					headerRight: () => <HeaderRight />,
+					headerRight: () => <HeaderRightCalendar />,
 				})}
 			/>
 			<stack.Screen name="TaskDetails" component={TaskDetailsScreen} />

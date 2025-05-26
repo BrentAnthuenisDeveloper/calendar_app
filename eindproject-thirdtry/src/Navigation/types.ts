@@ -14,7 +14,7 @@ export type TabNavigationParamList = {
 	CalendarStack: undefined;
 	Settings: undefined;
 };
-export type CalandarStackNavigationParamList = {
+export type CalendarStackNavigationParamList = {
 	Calendar: undefined;
 	TaskDetails: { CalendarEventId: string };
 	AddEvent: undefined;
@@ -26,16 +26,19 @@ export type LoginStackNavigationParamList = {
 };
 
 export type CalendarStackNavProps<
-	T extends keyof CalandarStackNavigationParamList,
-> = StackScreenProps<CalandarStackNavigationParamList, T>;
+	T extends keyof CalendarStackNavigationParamList,
+> = StackScreenProps<CalendarStackNavigationParamList, T>;
 
 export type DrawerNavProps<T extends keyof TabNavigationParamList> =
 	DrawerScreenProps<TabNavigationParamList, T>;
 
+export type LoginStackNavProps<T extends keyof LoginStackNavigationParamList> =
+	DrawerScreenProps<LoginStackNavigationParamList, T>;
+
 declare global {
 	namespace ReactNavigation {
 		interface RootParamList
-			extends CalandarStackNavigationParamList,
+			extends CalendarStackNavigationParamList,
 				TabNavigationParamList {}
 	}
 }

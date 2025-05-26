@@ -1,17 +1,49 @@
 import { StyleSheet, View } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { CalendarStackNavProps } from "../Navigation/types";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import AgendaWithFlatList from "../Components/Calendar/AgendaWithFlatList";
 import { useAppSelector } from "../hooks/redux";
 import { useDispatch, useSelector } from "react-redux";
-import { getEvents, removeEvent } from "../Redux/events/eventSlice";
+import { removeEvent } from "../Redux/events/eventSlice";
+import { collection, onSnapshot, orderBy, query, Unsubscribe } from "firebase/firestore";
+import CalendarEvent from "../Types/CalendarEvent";
+import { db } from "../firebase/firebaseConfig";
 
 const CalendarScreen = () => {
 	const navigation =
 		useNavigation<CalendarStackNavProps<"Calendar">["navigation"]>();
+	const isFocused = useIsFocused();
 	//const { events, removeEvent } = useCalendarContext();
-	const events = useAppSelector((state) => state.events);
+	// const events = useAppSelector((state) => state.events);
+	const [events, setEvents] = useState<CalendarEvent[]>([]);
+	useEffect(() => {
+    let unsubscribe: Unsubscribe;
+	
+    if (isFocused) {
+      (async () => {
+        try {
+
+          const q = query(
+            collection(db, "Events"),
+            // where("isElectric", "==", false),
+            orderBy("title", "asc")
+          );
+          unsubscribe = onSnapshot(q, (qs) => {
+            setEvents(qs.docs.map((ds) => ({ ...ds.data(), id: ds.id } as CalendarEvent)));
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
+
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, [isFocused]);
 	
 	const dispatch = useDispatch();
 	const removeEventLocal = (id: string) => {

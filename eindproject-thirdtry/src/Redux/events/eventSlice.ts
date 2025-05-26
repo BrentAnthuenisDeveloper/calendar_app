@@ -33,8 +33,8 @@ const eventsSlice = createSlice({
 			const event = action.payload;
 			const existingEvent = state.find((e) => e.id === event.id);
 			if (!existingEvent) {
-				state.push(event);
-			}
+				return [event, ...state];
+			} else return state;
 		},
 		removeEvent: (state, action: PayloadAction<string>) => {
 			return state.filter((event) => event.id !== action.payload);
@@ -48,11 +48,9 @@ const eventsSlice = createSlice({
 			);
 		},
 	},
-	
 });
 
 export const {
 	reducer,
 	actions: { addEvent, removeEvent, modifyEvent, clearAll },
-	selectors: { getEvents, getEventById, getEventsByDate },
 } = eventsSlice;

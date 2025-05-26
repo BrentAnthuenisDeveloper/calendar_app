@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useFonts } from "expo-font";
 import * as splashScreen from "expo-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
-import DrawerNavigator from "./src/Navigation/TabNavigator";
+import GlobalTabNavigator from "./src/Navigation/TabNavigator";
 import { CalendarProvider } from "./src/Context/CalendarContext";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
@@ -32,7 +32,7 @@ export default function App() {
 				<PersistGate loading={null} persistor={persistedStore}>
 					<CalendarProvider>
 						<NavigationContainer>
-							<DrawerNavigator />
+							<GlobalTabNavigator />
 						</NavigationContainer>
 					</CalendarProvider>
 				</PersistGate>

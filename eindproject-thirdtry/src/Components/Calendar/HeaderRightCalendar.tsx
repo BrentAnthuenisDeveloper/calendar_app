@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { CalendarStackNavProps } from "../../Navigation/types";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const HeaderRight = () => {
+const HeaderRightCalendar = () => {
 	const { calendarType, SetCalendarType } = useCalendarContext();
 	const navigation =
 		useNavigation<CalendarStackNavProps<"Calendar">["navigation"]>();
@@ -88,6 +88,6 @@ const HeaderRight = () => {
 	);
 };
 
-export default HeaderRight;
+export default HeaderRightCalendar;
 
 const styles = StyleSheet.create({});
