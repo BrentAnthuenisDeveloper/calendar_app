@@ -3,7 +3,7 @@ import React, { use, useState } from "react";
 import { Formik, FormikHelpers, useFormik } from "formik";
 import * as Yup from "yup";
 import { useCalendarContext } from "../../Context/CalendarContext";
-import { CalendarEvent, CalendarStackNavProps } from "../../Navigation/types";
+import { CalendarStackNavProps } from "../../Navigation/types";
 import { useDispatch } from "react-redux";
 import { addEvent } from "../../Redux/events/eventSlice";
 import MyText from "../../Components/MyText";
@@ -12,6 +12,8 @@ import { TextInput } from "react-native-paper";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 import { format } from "date-fns";
+import * as Notifications from "expo-notifications";
+import { CalendarEvent } from "@/Calendar-env";
 
 const validationSchema = Yup.object().shape({
 	title: Yup.string().required("Title is required"),
@@ -64,6 +66,19 @@ const CreateEventScreen = () => {
 				await addDoc(collection(db, "events"), newEvent);
 
 				console.log("Event saved to Firestore 🎉");
+				//create a push notification
+				const notificationDate = new Date(time.getTime() - 24 * 60 * 60 * 1000); // 24 hours before the event
+
+				await Notifications.scheduleNotificationAsync({
+					content: {
+						title: `${newEvent.title}`,
+						body: `Don't forget: ${newEvent.title} is tommorow`,
+					},
+					trigger: {
+						type: Notifications.SchedulableTriggerInputTypes.DATE,
+						date: notificationDate,
+					},
+				});
 				if (nav.canGoBack()) {
 					nav.goBack();
 				}

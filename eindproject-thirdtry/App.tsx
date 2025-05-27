@@ -7,10 +7,16 @@ import { CalendarProvider } from "./src/Context/CalendarContext";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistedStore, store } from "./src/Redux/store";
+import * as Notifications from "expo-notifications";
+import * as Device from "expo-device";
 
 splashScreen.preventAutoHideAsync();
 
 export default function App() {
+	useEffect(() => {
+		registerForPushNotificationsAsync();
+	}, []);
+
 	const [isFontLoaded, fontError] = useFonts({
 		ebgaramond: require("./assets/Fonts/EBGaramond-Regular.ttf"),
 		ebgaramondBold: require("./assets/Fonts/EBGaramond-Bold.ttf"),
@@ -43,3 +49,34 @@ export default function App() {
 		return null;
 	}
 }
+async function registerForPushNotificationsAsync() {
+	if (Device.isDevice) {
+		const { status: existingStatus } =
+			await Notifications.getPermissionsAsync();
+		let finalStatus = existingStatus;
+
+		if (existingStatus !== "granted") {
+			const { status } = await Notifications.requestPermissionsAsync();
+			finalStatus = status;
+		}
+
+		if (finalStatus !== "granted") {
+			alert("Failed to get push token!");
+			return;
+		}
+
+		const token = (await Notifications.getExpoPushTokenAsync()).data;
+		console.log("Expo Push Token:", token);
+	} else {
+		alert("Must use physical device for push notifications");
+	}
+}
+export const sendTestPushNotification = async () => {
+	await Notifications.scheduleNotificationAsync({
+		content: {
+			title: "📬 You've got mail!",
+			body: "This is a test push notification.",
+		},
+		trigger: null, // send immediately
+	});
+};
