@@ -8,6 +8,7 @@ import MyText from "../MyText";
 import { ActivityIndicator } from "react-native-paper";
 import CalendarPicker from "react-native-calendar-picker";
 import { CalendarEvent } from "@/Calendar-env";
+import { format } from "date-fns";
 
 interface DayViewProps {
 	calendar: CalendarEvent[];
@@ -41,6 +42,25 @@ const AgendaWithFlatList = ({
 		setLoading(false);
 		return filteredCalendar;
 	}, [calendar, selectedDate]);
+	const datesWithEventsAndStyle = useMemo(() => {
+		let uniqueDates: Date[] = [];
+		const dates = calendar.map((event) => {
+			let date = new Date(event.time);
+			date.setHours(0, 0, 0, 0);
+			return date;
+		});
+		for (const date of dates) {
+			if (!uniqueDates.some((d) => d.getTime() === date.getTime())) {
+				uniqueDates.push(date);
+			}
+		}
+		return uniqueDates.map((date) => {
+			return {
+				date: date,
+				textStyle: styles.busyDatesText,
+			};
+		});
+	}, [calendar]);
 
 	return (
 		<View style={styles.container}>
@@ -49,6 +69,9 @@ const AgendaWithFlatList = ({
 				onDateChange={(dayData) => {
 					setSelectedDate(dayData);
 				}}
+				todayBackgroundColor=""
+				customDatesStyles={datesWithEventsAndStyle}
+				todayTextStyle={{}}
 			/>
 			{loading ? (
 				<View style={styles.spinnerContainer}>
@@ -111,5 +134,9 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
+	},
+	busyDatesText: {
+		color: "#15008f",
+		fontWeight: "bold",
 	},
 });
