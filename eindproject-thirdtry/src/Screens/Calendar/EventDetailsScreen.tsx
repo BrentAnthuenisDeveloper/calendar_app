@@ -1,42 +1,44 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useMemo, useState } from "react";
 import { useRoute, useIsFocused } from "@react-navigation/native";
-import { CalendarStackNavProps } from "../Navigation/types";
-import { useCalendarContext } from "../Context/CalendarContext";
-import MyPaperText from "../Components/MyPaperText";
-import MyText from "../Components/MyText";
-import { useAppSelector } from "../hooks/redux";
+import { CalendarStackNavProps } from "../../Navigation/types";
+import { useCalendarContext } from "../../Context/CalendarContext";
+import MyPaperText from "../../Components/MyPaperText";
+import MyText from "../../Components/MyText";
+import { useAppSelector } from "../../hooks/redux";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../firebase/firebaseConfig";
-import CalendarEvent from "../Types/CalendarEvent";
+import { db } from "../../firebase/firebaseConfig";
+import CalendarEvent from "../../Types/CalendarEvent";
 import { set } from "date-fns";
 
-const TaskDetails = () => {
+const EventDetialsScreen = () => {
 	const {
 		params: { CalendarEventId },
-	} = useRoute<CalendarStackNavProps<"TaskDetails">["route"]>();
+	} = useRoute<CalendarStackNavProps<"EventDetails">["route"]>();
 	// const { findEvent } = useCalendarContext();
 	// const CalendarEvent = findEvent(CalendarEventId);
 	const events = useAppSelector((state) => state.events);
 	const [CalendarEvent, setCalendarEvent] = useState<CalendarEvent | null>(
 		null
 	);
-	const isFocused = useIsFocused();
 
 	useEffect(() => {
-		if (isFocused) {
-			(async () => {
-				try {
-					const carDocRef = doc(db, "Events", CalendarEventId);
-					const docSnap = await getDoc(carDocRef);
-					const event = { ...docSnap.data(), id: docSnap.id } as CalendarEvent;
-					setCalendarEvent(event);
-				} catch (error) {
-					console.log(error);
-				}
-			})();
-		}
-	}, [isFocused]);
+		(async () => {
+			try {
+				const carDocRef = doc(db, "events", CalendarEventId);
+				const docSnap = await getDoc(carDocRef);
+				const data = docSnap.data();
+				const event = {
+					...data,
+					time: data?.time?.toDate(), // Convert Firestore Timestamp to JS Date
+					id: docSnap.id,
+				} as CalendarEvent;
+				setCalendarEvent(event);
+			} catch (error) {
+				console.log(error);
+			}
+		})();
+	}, [CalendarEventId]);
 	return CalendarEvent ? (
 		<View style={styles.container}>
 			<View style={styles.textContainer}>
@@ -55,7 +57,7 @@ const TaskDetails = () => {
 	);
 };
 
-export default TaskDetails;
+export default EventDetialsScreen;
 
 const styles = StyleSheet.create({
 	container: {

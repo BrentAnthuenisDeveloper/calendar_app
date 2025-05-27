@@ -1,12 +1,13 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React, { useMemo, useState } from "react";
-import { CalendarEvent, CalendarStackNavProps } from "../../Navigation/types";
+import { CalendarStackNavProps } from "../../Navigation/types";
 import { useCalendarContext } from "../../Context/CalendarContext";
 import { FlatList } from "react-native";
 import AgendaItem from "./AgendaItem";
 import MyText from "../MyText";
 import { ActivityIndicator } from "react-native-paper";
 import CalendarPicker from "react-native-calendar-picker";
+import { CalendarEvent } from "@/Calendar-env";
 
 interface DayViewProps {
 	calendar: CalendarEvent[];
@@ -21,13 +22,9 @@ const AgendaWithFlatList = ({
 	const [loading, setLoading] = useState(true);
 	const { currentDate, selectedDate, setSelectedDate } = useCalendarContext();
 
-	const currentDateString = useMemo(
-		() => currentDate.toISOString(),
-		[currentDate]
-	);
-
 	const SelectedDaysItems = useMemo(() => {
 		setLoading(true);
+		console.log("calendar", calendar);
 
 		const filteredCalendar = calendar.filter((event) => {
 			const eventdate = new Date(event.time);
@@ -38,6 +35,9 @@ const AgendaWithFlatList = ({
 				eventdate.getFullYear() === selectedDate.getFullYear()
 			);
 		});
+		console.log("SelectedDate", selectedDate);
+		console.log("Filtered Calendar", filteredCalendar);
+
 		setLoading(false);
 		return filteredCalendar;
 	}, [calendar, selectedDate]);
@@ -62,7 +62,7 @@ const AgendaWithFlatList = ({
 						return (
 							<TouchableOpacity
 								onPress={() =>
-									navigation.navigate("TaskDetails", {
+									navigation.navigate("EventDetails", {
 										CalendarEventId: item.id,
 									})
 								}

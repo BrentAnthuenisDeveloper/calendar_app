@@ -3,6 +3,6 @@ interface CalendarEvent {
 	title: string;
 	description: string;
 	time: Date;
-	endTime: Date;
+	//endTime: Date;
 }
 export default CalendarEvent;

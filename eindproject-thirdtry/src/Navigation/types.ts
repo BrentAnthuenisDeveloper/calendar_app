@@ -1,14 +1,6 @@
 import { DrawerScreenProps } from "@react-navigation/drawer";
 import { StackScreenProps } from "@react-navigation/stack";
 
-export interface CalendarEvent {
-	id: string;
-	title: string;
-	description: string;
-	time: Date;
-	endTime: Date;
-}
-
 export type TabNavigationParamList = {
 	HomeStack: undefined;
 	CalendarStack: undefined;
@@ -16,7 +8,8 @@ export type TabNavigationParamList = {
 };
 export type CalendarStackNavigationParamList = {
 	Calendar: undefined;
-	TaskDetails: { CalendarEventId: string };
+	EventDetails: { CalendarEventId: string };
+	UpdateEvent: { CalendarEventId: string };
 	AddEvent: undefined;
 };
 export type LoginStackNavigationParamList = {

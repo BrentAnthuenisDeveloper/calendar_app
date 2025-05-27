@@ -4,7 +4,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { TabNavigationParamList } from "./types";
 import { startScreenTransition } from "react-native-reanimated";
 import StartScreen from "../Screens/StartScreen";
-import CalendarScreen from "../Screens/CalendarScreen";
+import CalendarScreen from "../Screens/Calendar/CalendarScreen";
 import SettingsScreen from "../Screens/SettingsScreen";
 import CalendarStackNavigator from "./CalendarStackNavigator";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
