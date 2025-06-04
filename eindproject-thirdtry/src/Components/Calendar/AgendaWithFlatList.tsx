@@ -5,10 +5,11 @@ import { useCalendarContext } from "../../Context/CalendarContext";
 import { FlatList } from "react-native";
 import AgendaItem from "./AgendaItem";
 import MyText from "../MyText";
-import { ActivityIndicator } from "react-native-paper";
+import { ActivityIndicator, Button } from "react-native-paper";
 import CalendarPicker from "react-native-calendar-picker";
 import { CalendarEvent } from "@/Calendar-env";
 import { format } from "date-fns";
+import { useDispatch } from "react-redux";
 
 interface DayViewProps {
 	calendar: CalendarEvent[];
@@ -22,6 +23,7 @@ const AgendaWithFlatList = ({
 }: DayViewProps) => {
 	const [loading, setLoading] = useState(true);
 	const { currentDate, selectedDate, setSelectedDate } = useCalendarContext();
+	const dispatch= useDispatch();
 
 	const SelectedDaysItems = useMemo(() => {
 		setLoading(true);
@@ -73,6 +75,7 @@ const AgendaWithFlatList = ({
 				customDatesStyles={datesWithEventsAndStyle}
 				todayTextStyle={{}}
 			/>
+			{/* <Button onPress={() => { dispatch(setCurrentDate(selectedDate)); }}>set as current date</Button> */}
 			{loading ? (
 				<View style={styles.spinnerContainer}>
 					<ActivityIndicator animating={true} size="large" />

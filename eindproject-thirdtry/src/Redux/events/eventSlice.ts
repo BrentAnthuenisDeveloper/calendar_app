@@ -7,21 +7,18 @@ const initialState: CalendarEvent[] = [
 		title: "Event 1",
 		description: "Description for Event 1",
 		time: new Date(2025, 4, 9, 12, 0, 0, 0),
-		endTime: new Date(2025, 4, 9, 14, 0, 0, 0),
 	},
 	{
 		id: "2",
 		title: "Event 2",
 		description: "Description for Event 2",
 		time: new Date(2025, 4, 9, 13, 0, 0, 0),
-		endTime: new Date(2025, 4, 9, 14, 0, 0, 0),
 	},
 	{
 		id: "3",
 		title: "Event 3",
 		description: "Description for Event 3",
 		time: new Date(2025, 4, 9, 15, 0, 0, 0),
-		endTime: new Date(2025, 4, 9, 20, 0, 0, 0),
 	},
 ];
 
